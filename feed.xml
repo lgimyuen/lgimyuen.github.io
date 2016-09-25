@@ -1,0 +1,674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Financial Data Mining Using Python</title>
+    <description>Financial Data Mining Using Python
+</description>
+    <link>https://lgimyuen.github.io//</link>
+    <atom:link href="https://lgimyuen.github.io//feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Sun, 25 Sep 2016 16:25:51 +0800</pubDate>
+    <lastBuildDate>Sun, 25 Sep 2016 16:25:51 +0800</lastBuildDate>
+    <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>How well Apple Inc Perform over the past 5 years?</title>
+        <description>&lt;p&gt;Are you interested to know how well Apple Inc’s Stock does compare to S&amp;amp;P500? 
+In this tutorial, I will show you how to compare the cummulative monthly return for Apple Inc and S&amp;amp;P500 using Python &lt;!--description--&gt;&lt;/p&gt;
+
+&lt;p&gt;The following code will load the required data for Apple Inc and S&amp;amp;P500. If you need explanation for the code, please refer to my previous tutorial on how to use Python to import finance data from Yahoo Finance.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas_datareader.data&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;web&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;datetime&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2011&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2016&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#load S&amp;amp;P500&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;snp500&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataReader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;^GSPC&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;yahoo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#load Apple Inc&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;aapl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataReader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AAPL&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;yahoo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Let’s plot the chart for S&amp;amp;P500 and Apple Inc using matplotlib first.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matplotlib&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inline&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;plt&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;S&amp;amp;P500&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xticks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rotation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;snp500&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Adj Close&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Date&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;indices&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AAPL&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xticks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rotation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aapl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Adj Close&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xlabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Date&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;US$&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/blog/apple-compare-snp500/output_3_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/blog/apple-compare-snp500/output_3_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To get the monthly return, first use pandas &lt;code class=&quot;highlighter-rouge&quot;&gt;resample&lt;/code&gt; to resample the daily price to monthly price using the price from first business day of the month. If you are interested in different frequency of price, you can specify the frequency you are interested in the argument of &lt;code class=&quot;highlighter-rouge&quot;&gt;resample&lt;/code&gt;. Refer to &lt;a href=&quot;http://pandas.pydata.org/pandas-docs/stable/timeseries.html#offset-aliases&quot;&gt;timeseries offset aliases&lt;/a&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;B       business day frequency
+C       custom business day frequency (experimental)
+D       calendar day frequency
+W       weekly frequency
+M       month end frequency
+BM      business month end frequency
+CBM     custom business month end frequency
+MS      month start frequency
+BMS     business month start frequency
+CBMS    custom business month start frequency
+Q       quarter end frequency
+BQ      business quarter endfrequency
+QS      quarter start frequency
+BQS     business quarter start frequency
+A       year end frequency
+BA      business year end frequency
+AS      year start frequency
+BAS     business year start frequency
+BH      business hour frequency
+H       hourly frequency
+T       minutely frequency
+S       secondly frequency
+L       milliseonds
+U       microseconds
+N       nanoseconds
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;aapl_mthly&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aapl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;BMS&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;snp500_mthly&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snp500&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resample&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;BMS&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Let’s print the first 5 of &lt;code class=&quot;highlighter-rouge&quot;&gt;aapl_mthly&lt;/code&gt; out.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;aapl_mthly&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Open&lt;/th&gt;
+      &lt;th&gt;High&lt;/th&gt;
+      &lt;th&gt;Low&lt;/th&gt;
+      &lt;th&gt;Close&lt;/th&gt;
+      &lt;th&gt;Volume&lt;/th&gt;
+      &lt;th&gt;Adj Close&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Date&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-01-03&lt;/th&gt;
+      &lt;td&gt;325.640003&lt;/td&gt;
+      &lt;td&gt;330.260002&lt;/td&gt;
+      &lt;td&gt;324.840012&lt;/td&gt;
+      &lt;td&gt;329.570000&lt;/td&gt;
+      &lt;td&gt;111284600&lt;/td&gt;
+      &lt;td&gt;43.104243&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-02-01&lt;/th&gt;
+      &lt;td&gt;341.299988&lt;/td&gt;
+      &lt;td&gt;345.649994&lt;/td&gt;
+      &lt;td&gt;340.980007&lt;/td&gt;
+      &lt;td&gt;345.030006&lt;/td&gt;
+      &lt;td&gt;106658300&lt;/td&gt;
+      &lt;td&gt;45.126247&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-03-01&lt;/th&gt;
+      &lt;td&gt;355.470005&lt;/td&gt;
+      &lt;td&gt;355.719997&lt;/td&gt;
+      &lt;td&gt;347.680000&lt;/td&gt;
+      &lt;td&gt;349.309998&lt;/td&gt;
+      &lt;td&gt;114034200&lt;/td&gt;
+      &lt;td&gt;45.686024&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-04-01&lt;/th&gt;
+      &lt;td&gt;351.110012&lt;/td&gt;
+      &lt;td&gt;351.589996&lt;/td&gt;
+      &lt;td&gt;343.300007&lt;/td&gt;
+      &lt;td&gt;344.560009&lt;/td&gt;
+      &lt;td&gt;104665400&lt;/td&gt;
+      &lt;td&gt;45.064776&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-05-02&lt;/th&gt;
+      &lt;td&gt;349.739994&lt;/td&gt;
+      &lt;td&gt;350.469997&lt;/td&gt;
+      &lt;td&gt;345.500004&lt;/td&gt;
+      &lt;td&gt;346.279995&lt;/td&gt;
+      &lt;td&gt;110678400&lt;/td&gt;
+      &lt;td&gt;45.289732&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Monthly Return formula:
+&lt;script type=&quot;math/tex&quot;&gt;R_{mth} = \frac{P_{t+1}}{P_{t}}-1&lt;/script&gt;
+Fortunately, return could be easily calculated using &lt;code class=&quot;highlighter-rouge&quot;&gt;pct_change&lt;/code&gt;. I will use the resampled monthly start price to compute the monthly return.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;aapl_mret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aapl_mthly&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pct_change&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;snp500_mret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snp500_mthly&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pct_change&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;aapl_mret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Open&lt;/th&gt;
+      &lt;th&gt;High&lt;/th&gt;
+      &lt;th&gt;Low&lt;/th&gt;
+      &lt;th&gt;Close&lt;/th&gt;
+      &lt;th&gt;Volume&lt;/th&gt;
+      &lt;th&gt;Adj Close&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Date&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-01-03&lt;/th&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+      &lt;td&gt;NaN&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-02-01&lt;/th&gt;
+      &lt;td&gt;0.048090&lt;/td&gt;
+      &lt;td&gt;0.046600&lt;/td&gt;
+      &lt;td&gt;0.049686&lt;/td&gt;
+      &lt;td&gt;0.046910&lt;/td&gt;
+      &lt;td&gt;-0.041572&lt;/td&gt;
+      &lt;td&gt;0.046910&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-03-01&lt;/th&gt;
+      &lt;td&gt;0.041518&lt;/td&gt;
+      &lt;td&gt;0.029134&lt;/td&gt;
+      &lt;td&gt;0.019649&lt;/td&gt;
+      &lt;td&gt;0.012405&lt;/td&gt;
+      &lt;td&gt;0.069154&lt;/td&gt;
+      &lt;td&gt;0.012405&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-04-01&lt;/th&gt;
+      &lt;td&gt;-0.012265&lt;/td&gt;
+      &lt;td&gt;-0.011610&lt;/td&gt;
+      &lt;td&gt;-0.012598&lt;/td&gt;
+      &lt;td&gt;-0.013598&lt;/td&gt;
+      &lt;td&gt;-0.082158&lt;/td&gt;
+      &lt;td&gt;-0.013598&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-05-02&lt;/th&gt;
+      &lt;td&gt;-0.003902&lt;/td&gt;
+      &lt;td&gt;-0.003186&lt;/td&gt;
+      &lt;td&gt;0.006408&lt;/td&gt;
+      &lt;td&gt;0.004992&lt;/td&gt;
+      &lt;td&gt;0.057450&lt;/td&gt;
+      &lt;td&gt;0.004992&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Notice that the first row contains NaN values because there is no previous price available to compute the return since it is the first row. I will use slicing to remove the first row.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;aapl_mret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;aapl_mret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;snp500_mret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;snp500_mret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;aapl_mret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Open&lt;/th&gt;
+      &lt;th&gt;High&lt;/th&gt;
+      &lt;th&gt;Low&lt;/th&gt;
+      &lt;th&gt;Close&lt;/th&gt;
+      &lt;th&gt;Volume&lt;/th&gt;
+      &lt;th&gt;Adj Close&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Date&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-02-01&lt;/th&gt;
+      &lt;td&gt;0.048090&lt;/td&gt;
+      &lt;td&gt;0.046600&lt;/td&gt;
+      &lt;td&gt;0.049686&lt;/td&gt;
+      &lt;td&gt;0.046910&lt;/td&gt;
+      &lt;td&gt;-0.041572&lt;/td&gt;
+      &lt;td&gt;0.046910&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-03-01&lt;/th&gt;
+      &lt;td&gt;0.041518&lt;/td&gt;
+      &lt;td&gt;0.029134&lt;/td&gt;
+      &lt;td&gt;0.019649&lt;/td&gt;
+      &lt;td&gt;0.012405&lt;/td&gt;
+      &lt;td&gt;0.069154&lt;/td&gt;
+      &lt;td&gt;0.012405&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-04-01&lt;/th&gt;
+      &lt;td&gt;-0.012265&lt;/td&gt;
+      &lt;td&gt;-0.011610&lt;/td&gt;
+      &lt;td&gt;-0.012598&lt;/td&gt;
+      &lt;td&gt;-0.013598&lt;/td&gt;
+      &lt;td&gt;-0.082158&lt;/td&gt;
+      &lt;td&gt;-0.013598&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-05-02&lt;/th&gt;
+      &lt;td&gt;-0.003902&lt;/td&gt;
+      &lt;td&gt;-0.003186&lt;/td&gt;
+      &lt;td&gt;0.006408&lt;/td&gt;
+      &lt;td&gt;0.004992&lt;/td&gt;
+      &lt;td&gt;0.057450&lt;/td&gt;
+      &lt;td&gt;0.004992&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-06-01&lt;/th&gt;
+      &lt;td&gt;-0.002488&lt;/td&gt;
+      &lt;td&gt;0.004737&lt;/td&gt;
+      &lt;td&gt;-0.002460&lt;/td&gt;
+      &lt;td&gt;-0.002224&lt;/td&gt;
+      &lt;td&gt;0.252916&lt;/td&gt;
+      &lt;td&gt;-0.002224&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now, let’s compute the cummulative Return using the following formula:
+&lt;script type=&quot;math/tex&quot;&gt;R_{cummulative}(N) = \prod_{t=1}^{N}(1+R_{mth}(t))&lt;/script&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Pandas comes with &lt;code class=&quot;highlighter-rouge&quot;&gt;cumprod&lt;/code&gt; to compute the cummulative return for every rows.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;aapl_cumret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aapl_mret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cumprod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;snp500_cumret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;snp500_mret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cumprod&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;aapl_cumret&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Open&lt;/th&gt;
+      &lt;th&gt;High&lt;/th&gt;
+      &lt;th&gt;Low&lt;/th&gt;
+      &lt;th&gt;Close&lt;/th&gt;
+      &lt;th&gt;Volume&lt;/th&gt;
+      &lt;th&gt;Adj Close&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Date&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-02-01&lt;/th&gt;
+      &lt;td&gt;1.048090&lt;/td&gt;
+      &lt;td&gt;1.046600&lt;/td&gt;
+      &lt;td&gt;1.049686&lt;/td&gt;
+      &lt;td&gt;1.046910&lt;/td&gt;
+      &lt;td&gt;0.958428&lt;/td&gt;
+      &lt;td&gt;1.046910&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-03-01&lt;/th&gt;
+      &lt;td&gt;1.091604&lt;/td&gt;
+      &lt;td&gt;1.077091&lt;/td&gt;
+      &lt;td&gt;1.070311&lt;/td&gt;
+      &lt;td&gt;1.059896&lt;/td&gt;
+      &lt;td&gt;1.024708&lt;/td&gt;
+      &lt;td&gt;1.059896&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-04-01&lt;/th&gt;
+      &lt;td&gt;1.078215&lt;/td&gt;
+      &lt;td&gt;1.064585&lt;/td&gt;
+      &lt;td&gt;1.056828&lt;/td&gt;
+      &lt;td&gt;1.045484&lt;/td&gt;
+      &lt;td&gt;0.940520&lt;/td&gt;
+      &lt;td&gt;1.045484&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-05-02&lt;/th&gt;
+      &lt;td&gt;1.074008&lt;/td&gt;
+      &lt;td&gt;1.061194&lt;/td&gt;
+      &lt;td&gt;1.063601&lt;/td&gt;
+      &lt;td&gt;1.050702&lt;/td&gt;
+      &lt;td&gt;0.994553&lt;/td&gt;
+      &lt;td&gt;1.050702&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-06-01&lt;/th&gt;
+      &lt;td&gt;1.071336&lt;/td&gt;
+      &lt;td&gt;1.066221&lt;/td&gt;
+      &lt;td&gt;1.060984&lt;/td&gt;
+      &lt;td&gt;1.048366&lt;/td&gt;
+      &lt;td&gt;1.246091&lt;/td&gt;
+      &lt;td&gt;1.048366&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+
+&lt;p&gt;I will plot cummulative monthly return for Apple Inc and S&amp;amp;P500 together in the same plot.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Cummulative Monthly Return&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;aapl_cumret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Adj Close&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;r&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AAPL Cummulative Return&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;snp500_cumret&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Adj Close&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;b&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;label&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;S&amp;amp;P500 Cummulative Return&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xticks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rotation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;legend&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;upper left&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/img/blog/apple-compare-snp500/output_15_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;From this plot, we can actually see that over the past 5 years+, Apple Inc stock actually outperform S&amp;amp;P 500. Good luck to you if you have been holding Apple Inc since 2011!&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Sat, 24 Sep 2016 00:54:46 +0800</pubDate>
+        <link>https://lgimyuen.github.io//blog/pandas/python/2016/09/24/how-apple-perform-against-snp500.html</link>
+        <guid isPermaLink="true">https://lgimyuen.github.io//blog/pandas/python/2016/09/24/how-apple-perform-against-snp500.html</guid>
+        
+        
+        <category>blog</category>
+        
+        <category>Pandas</category>
+        
+        <category>Python</category>
+        
+      </item>
+    
+      <item>
+        <title>Using Python Pandas to read stock quote or index from Yahoo finance</title>
+        <description>&lt;p&gt;In this tutorial, you will learn how to use python pandas to read stock quote or index from yahoo finance. &lt;!--description--&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Since pandas 0.17.0, the subpackage &lt;code class=&quot;highlighter-rouge&quot;&gt;pandas.io.data&lt;/code&gt; will be removed. This subpackage will be replaced with &lt;a href=&quot;http://pandas.pydata.org/pandas-docs/stable/remote_data.html&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pandas-datareader&lt;/code&gt;&lt;/a&gt;. For this tutorial, I will be using pandas-datareader.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Let’s import the Pandas datareader and datetime package. We will be using the &lt;code class=&quot;highlighter-rouge&quot;&gt;datetime&lt;/code&gt; function to specify the start and end date.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas_datareader.data&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;web&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;datetime&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;The arguments for &lt;code class=&quot;highlighter-rouge&quot;&gt;datetime.datetime&lt;/code&gt; are: Year, Month and Day. I will specify the start date as 2011/1/1 and end date as 2016/9/22&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2011&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2016&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Now let’s load in the data using &lt;code class=&quot;highlighter-rouge&quot;&gt;DataReader&lt;/code&gt;. The argument for &lt;code class=&quot;highlighter-rouge&quot;&gt;DataReader&lt;/code&gt; are: Stock Quote, Source (e.g. Yahoo, Google, etc), start date, end date&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#load S&amp;amp;P500&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;snp500&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataReader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;^GSPC&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;yahoo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#load Apple Inc&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;aapl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataReader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AAPL&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;yahoo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Let’s examine the data loaded for Apple and S&amp;amp;P500&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;snp500&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Open&lt;/th&gt;
+      &lt;th&gt;High&lt;/th&gt;
+      &lt;th&gt;Low&lt;/th&gt;
+      &lt;th&gt;Close&lt;/th&gt;
+      &lt;th&gt;Volume&lt;/th&gt;
+      &lt;th&gt;Adj Close&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Date&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-01-03&lt;/th&gt;
+      &lt;td&gt;1257.619995&lt;/td&gt;
+      &lt;td&gt;1276.170044&lt;/td&gt;
+      &lt;td&gt;1257.619995&lt;/td&gt;
+      &lt;td&gt;1271.869995&lt;/td&gt;
+      &lt;td&gt;4286670000&lt;/td&gt;
+      &lt;td&gt;1271.869995&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-01-04&lt;/th&gt;
+      &lt;td&gt;1272.949951&lt;/td&gt;
+      &lt;td&gt;1274.119995&lt;/td&gt;
+      &lt;td&gt;1262.660034&lt;/td&gt;
+      &lt;td&gt;1270.199951&lt;/td&gt;
+      &lt;td&gt;4796420000&lt;/td&gt;
+      &lt;td&gt;1270.199951&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-01-05&lt;/th&gt;
+      &lt;td&gt;1268.780029&lt;/td&gt;
+      &lt;td&gt;1277.630005&lt;/td&gt;
+      &lt;td&gt;1265.359985&lt;/td&gt;
+      &lt;td&gt;1276.560059&lt;/td&gt;
+      &lt;td&gt;4764920000&lt;/td&gt;
+      &lt;td&gt;1276.560059&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-01-06&lt;/th&gt;
+      &lt;td&gt;1276.290039&lt;/td&gt;
+      &lt;td&gt;1278.170044&lt;/td&gt;
+      &lt;td&gt;1270.430054&lt;/td&gt;
+      &lt;td&gt;1273.849976&lt;/td&gt;
+      &lt;td&gt;4844100000&lt;/td&gt;
+      &lt;td&gt;1273.849976&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-01-07&lt;/th&gt;
+      &lt;td&gt;1274.410034&lt;/td&gt;
+      &lt;td&gt;1276.829956&lt;/td&gt;
+      &lt;td&gt;1261.699951&lt;/td&gt;
+      &lt;td&gt;1271.500000&lt;/td&gt;
+      &lt;td&gt;4963110000&lt;/td&gt;
+      &lt;td&gt;1271.500000&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;aapl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;head&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div&gt;
+&lt;table border=&quot;1&quot; class=&quot;dataframe&quot;&gt;
+  &lt;thead&gt;
+    &lt;tr style=&quot;text-align: right;&quot;&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;Open&lt;/th&gt;
+      &lt;th&gt;High&lt;/th&gt;
+      &lt;th&gt;Low&lt;/th&gt;
+      &lt;th&gt;Close&lt;/th&gt;
+      &lt;th&gt;Volume&lt;/th&gt;
+      &lt;th&gt;Adj Close&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Date&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-01-03&lt;/th&gt;
+      &lt;td&gt;325.640003&lt;/td&gt;
+      &lt;td&gt;330.260002&lt;/td&gt;
+      &lt;td&gt;324.840012&lt;/td&gt;
+      &lt;td&gt;329.570000&lt;/td&gt;
+      &lt;td&gt;111284600&lt;/td&gt;
+      &lt;td&gt;43.104243&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-01-04&lt;/th&gt;
+      &lt;td&gt;332.439999&lt;/td&gt;
+      &lt;td&gt;332.500000&lt;/td&gt;
+      &lt;td&gt;328.149994&lt;/td&gt;
+      &lt;td&gt;331.290012&lt;/td&gt;
+      &lt;td&gt;77270200&lt;/td&gt;
+      &lt;td&gt;43.329202&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-01-05&lt;/th&gt;
+      &lt;td&gt;329.549999&lt;/td&gt;
+      &lt;td&gt;334.339989&lt;/td&gt;
+      &lt;td&gt;329.500011&lt;/td&gt;
+      &lt;td&gt;334.000008&lt;/td&gt;
+      &lt;td&gt;63879900&lt;/td&gt;
+      &lt;td&gt;43.683640&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-01-06&lt;/th&gt;
+      &lt;td&gt;334.719997&lt;/td&gt;
+      &lt;td&gt;335.249996&lt;/td&gt;
+      &lt;td&gt;332.900009&lt;/td&gt;
+      &lt;td&gt;333.729988&lt;/td&gt;
+      &lt;td&gt;75107200&lt;/td&gt;
+      &lt;td&gt;43.648325&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2011-01-07&lt;/th&gt;
+      &lt;td&gt;333.989994&lt;/td&gt;
+      &lt;td&gt;336.349995&lt;/td&gt;
+      &lt;td&gt;331.900013&lt;/td&gt;
+      &lt;td&gt;336.120003&lt;/td&gt;
+      &lt;td&gt;77982800&lt;/td&gt;
+      &lt;td&gt;43.960913&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now, let’s put everything together!&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas_datareader.data&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;web&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;datetime&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2011&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2016&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;#load S&amp;amp;P500&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;snp500&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataReader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;^GSPC&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;yahoo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#load Apple Inc&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;aapl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataReader&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AAPL&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;yahoo&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;end&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+</description>
+        <pubDate>Thu, 22 Sep 2016 00:54:46 +0800</pubDate>
+        <link>https://lgimyuen.github.io//blog/python/pandas/2016/09/22/using-python-yahoofinance.html</link>
+        <guid isPermaLink="true">https://lgimyuen.github.io//blog/python/pandas/2016/09/22/using-python-yahoofinance.html</guid>
+        
+        
+        <category>blog</category>
+        
+        <category>Python</category>
+        
+        <category>Pandas</category>
+        
+      </item>
+    
+  </channel>
+</rss>
