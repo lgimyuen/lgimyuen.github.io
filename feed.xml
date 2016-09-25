@@ -6,8 +6,8 @@
 </description>
     <link>https://lgimyuen.github.io//</link>
     <atom:link href="https://lgimyuen.github.io//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Sun, 25 Sep 2016 16:30:44 +0800</pubDate>
-    <lastBuildDate>Sun, 25 Sep 2016 16:30:44 +0800</lastBuildDate>
+    <pubDate>Sun, 25 Sep 2016 16:35:17 +0800</pubDate>
+    <lastBuildDate>Sun, 25 Sep 2016 16:35:17 +0800</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
@@ -15,7 +15,7 @@
         <description>&lt;p&gt;Are you interested to know how well Apple Inc’s Stock does compare to S&amp;amp;P500? 
 In this tutorial, I will show you how to compare the cummulative monthly return for Apple Inc and S&amp;amp;P500 using Python &lt;!--description--&gt;&lt;/p&gt;
 
-&lt;p&gt;The following code will load the required data for Apple Inc and S&amp;amp;P500. If you need explanation for the code, please refer to my previous tutorial on how to use Python to import finance data from Yahoo Finance.&lt;/p&gt;
+&lt;p&gt;The following code will load the required data for Apple Inc and S&amp;amp;P500. If you need explanation for the code, please refer to my previous tutorial on &lt;a href=&quot;/blog/python/pandas/2016/09/22/using-python-yahoofinance.html&quot;&gt;how to use Python to import finance data from Yahoo Finance&lt;/a&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas_datareader.data&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;web&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;datetime&lt;/span&gt;
