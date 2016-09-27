@@ -6,8 +6,8 @@
 </description>
     <link>https://lgimyuen.github.io//</link>
     <atom:link href="https://lgimyuen.github.io//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 28 Sep 2016 00:37:07 +0800</pubDate>
-    <lastBuildDate>Wed, 28 Sep 2016 00:37:07 +0800</lastBuildDate>
+    <pubDate>Wed, 28 Sep 2016 07:43:18 +0800</pubDate>
+    <lastBuildDate>Wed, 28 Sep 2016 07:43:18 +0800</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
@@ -29,7 +29,7 @@
   &lt;p&gt;Note that, you could choose shorter period for return such as daily return but daily return could be too noisy and the beta might be measuring noise instead of the systematic risk. It really depends on the nature of the asset you are measuring. For fast growing company a shorter period might be preferred sometime.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;For this post, I will reuse the code which I shown in my previous post on how to import finance data from yahoo finance and how to compute the monthly return using &lt;code class=&quot;highlighter-rouge&quot;&gt;pct_change&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;For this post, I will reuse the code which I shown in my previous post on &lt;a href=&quot;/blog/python/pandas/2016/09/22/using-python-yahoofinance.html&quot;&gt;how to import finance data from yahoo finance&lt;/a&gt; and &lt;a href=&quot;/blog/pandas/python/2016/09/24/how-apple-perform-against-snp500.html&quot;&gt;how to compute the monthly return&lt;/a&gt; using &lt;code class=&quot;highlighter-rouge&quot;&gt;pct_change&lt;/code&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matplotlib&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inline&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas_datareader.data&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;web&lt;/span&gt;
@@ -116,7 +116,7 @@ Warnings:
 
 &lt;p&gt;The result of this simple Linear Regression isn’t very good. The line shown in red seem to be affected by outlier. Even though the Probability of Type I Error for Beta is near to 0, the adjusted &lt;script type=&quot;math/tex&quot;&gt;R^2&lt;/script&gt; result is only 0.477. Which mean only 47.7% of the data’s variation is explained by Beta.&lt;/p&gt;
 
-&lt;p&gt;One way to make the fit more robust to outlier is by using Robust method to reject or weight down outlier. To do this, you may use the Robust module in &lt;code class=&quot;highlighter-rouge&quot;&gt;statsmodels.robust.norms&lt;/code&gt;. I will not cover how to do this in this post.&lt;/p&gt;
+&lt;p&gt;In practice, most stock has low adjusted &lt;script type=&quot;math/tex&quot;&gt;R^2&lt;/script&gt; around 0.1 to 0.5. This is because the single index CAPM’s Beta is only measuring systematic risk. To accord for more type of risk (e.g. Size, Liquidity, etc), you could use multi-index model. If you are interested, you might want to check out Arbitrage Pricing Theory for more information.&lt;/p&gt;
 
 &lt;p&gt;Here is all the code put together:&lt;/p&gt;
 
