@@ -491,7 +491,40 @@ Fortunately, return could be easily calculated using <code class="highlighter-ro
 
 <p>From this plot, we can actually see that over the past 5 years+, Apple Inc stock actually outperform S&amp;P 500. Good luck to you if you have been holding Apple Inc since 2011!</p>
 
-<div class="language-python highlighter-rouge"><pre class="highlight"><code>
+<p>Here is the code put together…</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="kn">import</span> <span class="nn">pandas_datareader.data</span> <span class="kn">as</span> <span class="nn">web</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2011</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">end</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2016</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="c">#load S&amp;P500</span>
+<span class="n">snp500</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="s">"^GSPC"</span><span class="p">,</span> <span class="s">"yahoo"</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+<span class="c">#load Apple Inc</span>
+<span class="n">aapl</span> <span class="o">=</span> <span class="n">web</span><span class="o">.</span><span class="n">DataReader</span><span class="p">(</span><span class="s">"AAPL"</span><span class="p">,</span> <span class="s">"yahoo"</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">)</span>
+
+<span class="n">aapl_mthly</span> <span class="o">=</span> <span class="n">aapl</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">"BMS"</span><span class="p">)</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">snp500_mthly</span> <span class="o">=</span> <span class="n">snp500</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s">"BMS"</span><span class="p">)</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">aapl_mret</span> <span class="o">=</span> <span class="n">aapl_mthly</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span>
+<span class="n">snp500_mret</span> <span class="o">=</span> <span class="n">snp500_mthly</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span>
+
+<span class="n">aapl_mret</span> <span class="o">=</span> <span class="n">aapl_mret</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">snp500_mret</span> <span class="o">=</span> <span class="n">snp500_mret</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+
+<span class="n">aapl_cumret</span> <span class="o">=</span> <span class="p">(</span><span class="n">aapl_mret</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">cumprod</span><span class="p">()</span>
+<span class="n">snp500_cumret</span> <span class="o">=</span> <span class="p">(</span><span class="n">snp500_mret</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">cumprod</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Cummulative Monthly Return"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">aapl_cumret</span><span class="p">[</span><span class="s">"Adj Close"</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">"AAPL Cummulative Return"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">snp500_cumret</span><span class="p">[</span><span class="s">"Adj Close"</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">"S&amp;P500 Cummulative Return"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">"upper left"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </code></pre>
 </div>
 
