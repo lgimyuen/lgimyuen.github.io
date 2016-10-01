@@ -69,6 +69,8 @@
     <p>In this post, I will show you how to calculate the Beta of Apple Inc using Python. 
 <!--description--></p>
 
+<h2 id="single-index-model">Single Index Model</h2>
+
 <p>According to CAPM model, the beta of a stock basically measures the systematic risk of the stock. Beta can be estimated by regressing the following formula: 
 <script type="math/tex">R_i = \hat{\alpha} + \hat{\beta}R_m</script></p>
 <ul>
@@ -78,11 +80,12 @@
   <li><script type="math/tex">\hat{\beta}</script> is the beta of asset i to be estimated</li>
 </ul>
 
-<p>The beta is calculated will be quite different for different return period and the sampling period chosen. For this example I chose 3 years of monthly return.</p>
+<p>The beta calculated will be quite different for different return period and the sampling period chosen. For this example I chose 3 years of monthly return.</p>
 <blockquote>
   <p>Note that, you could choose shorter period for return such as daily return but daily return could be too noisy and the beta might be measuring noise instead of the systematic risk. It really depends on the nature of the asset you are measuring. For fast growing company a shorter period might be preferred sometime.</p>
 </blockquote>
 
+<h2 id="import-data-from-yahoo-finance">Import Data From Yahoo Finance</h2>
 <p>For this post, I will reuse the code which I shown in my previous post on <a href="/blog/python/pandas/2016/09/22/using-python-yahoofinance.html">how to import finance data from yahoo finance</a> and <a href="/blog/pandas/python/2016/09/24/how-apple-perform-against-snp500.html">how to compute the monthly return</a> using <code class="highlighter-rouge">pct_change</code>.</p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
@@ -118,6 +121,7 @@
 
 <p><img src="/assets/img/blog/calculate-beta/output_1_0.png" alt="png" /></p>
 
+<h2 id="linear-regression">Linear Regression</h2>
 <p>Fortunately, it is simple to estimate <script type="math/tex">\alpha</script> and <script type="math/tex">\beta</script> in python using the Linear Regression function in Statsmodel package <code class="highlighter-rouge">statsmodels.api.OLS</code></p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="kn">as</span> <span class="nn">sm</span>
@@ -171,6 +175,8 @@ Warnings:
 <p>The result of this simple Linear Regression isn’t very good. The line shown in red seem to be affected by outlier. Even though the Probability of Type I Error for Beta is near to 0, the adjusted <script type="math/tex">R^2</script> result is only 0.477. Which mean only 47.7% of the data’s variation is explained by Beta.</p>
 
 <p>In practice, most stock has low adjusted <script type="math/tex">R^2</script> around 0.1 to 0.5. This is because the single index CAPM’s Beta is only measuring systematic risk. To accord for more type of risk (e.g. Size, Liquidity, etc), you could use multi-index model. If you are interested, you might want to check out Arbitrage Pricing Theory for more information.</p>
+
+<h2 id="code">Code</h2>
 
 <p>Here is all the code put together:</p>
 
@@ -251,6 +257,17 @@ Warnings:
   </footer>
 
   
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname  = 'lgimyuen';
+    var disqus_identifier = '/blog/pandas/python/2016/09/27/Calculating-Beta-of-Apple-Inc';
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
 
 
 </article>

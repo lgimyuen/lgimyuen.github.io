@@ -69,6 +69,7 @@
     <p>Are you interested to know how well Apple Inc’s Stock does compare to S&amp;P500? 
 In this tutorial, I will show you how to compare the cummulative monthly return for Apple Inc and S&amp;P500 using Python <!--description--></p>
 
+<h2 id="import-data-from-yahoo-finance">Import data from Yahoo Finance</h2>
 <p>The following code will load the required data for Apple Inc and S&amp;P500. If you need explanation for the code, please refer to my previous tutorial on <a href="/blog/python/pandas/2016/09/22/using-python-yahoofinance.html">how to use Python to import finance data from Yahoo Finance</a>.</p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas_datareader.data</span> <span class="kn">as</span> <span class="nn">web</span>
@@ -84,6 +85,7 @@ In this tutorial, I will show you how to compare the cummulative monthly return 
 </code></pre>
 </div>
 
+<h2 id="plot-price-chart">Plot Price Chart</h2>
 <p>Let’s plot the chart for S&amp;P500 and Apple Inc using matplotlib first.</p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
@@ -111,7 +113,10 @@ In this tutorial, I will show you how to compare the cummulative monthly return 
 
 <p><img src="/assets/img/blog/apple-compare-snp500/output_3_1.png" alt="png" /></p>
 
+<h2 id="pandas-resample">Pandas Resample</h2>
 <p>To get the monthly return, first use pandas <code class="highlighter-rouge">resample</code> to resample the daily price to monthly price using the price from first business day of the month. If you are interested in different frequency of price, you can specify the frequency you are interested in the argument of <code class="highlighter-rouge">resample</code>. Refer to <a href="http://pandas.pydata.org/pandas-docs/stable/timeseries.html#offset-aliases">timeseries offset aliases</a></p>
+
+<h2 id="timeseries-offset-aliases">Timeseries offset aliases</h2>
 
 <div class="highlighter-rouge"><pre class="highlight"><code>B       business day frequency
 C       custom business day frequency (experimental)
@@ -389,7 +394,7 @@ Fortunately, return could be easily calculated using <code class="highlighter-ro
 </div>
 
 <p>Now, let’s compute the cummulative Return using the following formula:
-<script type="math/tex">R_{cummulative}(N) = \prod_{t=1}^{N}(1+R_{mth}(t))</script></p>
+\[ R_{cummulative}(N) = \prod_{t=1}^{N}(1+R_{mth}(t)) \]</p>
 
 <blockquote>
   <p>Pandas comes with <code class="highlighter-rouge">cumprod</code> to compute the cummulative return for every rows.</p>
@@ -474,6 +479,8 @@ Fortunately, return could be easily calculated using <code class="highlighter-ro
 </table>
 </div>
 
+<h2 id="cummulative-monthly-return">Cummulative Monthly Return</h2>
+
 <p>I will plot cummulative monthly return for Apple Inc and S&amp;P500 together in the same plot.</p>
 
 <div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
@@ -490,6 +497,8 @@ Fortunately, return could be easily calculated using <code class="highlighter-ro
 <p><img src="/assets/img/blog/apple-compare-snp500/output_15_0.png" alt="png" /></p>
 
 <p>From this plot, we can actually see that over the past 5 years+, Apple Inc stock actually outperform S&amp;P 500. Good luck to you if you have been holding Apple Inc since 2011!</p>
+
+<h2 id="code">Code</h2>
 
 <p>Here is the code put together…</p>
 
@@ -561,6 +570,17 @@ Fortunately, return could be easily calculated using <code class="highlighter-ro
   </footer>
 
   
+  <div id="disqus_thread"></div>
+  <script type="text/javascript">
+    var disqus_shortname  = 'lgimyuen';
+    var disqus_identifier = '/blog/pandas/python/2016/09/24/how-apple-perform-against-snp500';
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
 
 
 </article>

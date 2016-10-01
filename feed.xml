@@ -6,14 +6,16 @@
 </description>
     <link>https://lgimyuen.github.io//</link>
     <atom:link href="https://lgimyuen.github.io//feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 28 Sep 2016 07:43:18 +0800</pubDate>
-    <lastBuildDate>Wed, 28 Sep 2016 07:43:18 +0800</lastBuildDate>
+    <pubDate>Sat, 01 Oct 2016 15:38:08 +0800</pubDate>
+    <lastBuildDate>Sat, 01 Oct 2016 15:38:08 +0800</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
         <title>How to calculate Beta of Apple Inc or any stock using Python</title>
         <description>&lt;p&gt;In this post, I will show you how to calculate the Beta of Apple Inc using Python. 
 &lt;!--description--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;single-index-model&quot;&gt;Single Index Model&lt;/h2&gt;
 
 &lt;p&gt;According to CAPM model, the beta of a stock basically measures the systematic risk of the stock. Beta can be estimated by regressing the following formula: 
 &lt;script type=&quot;math/tex&quot;&gt;R_i = \hat{\alpha} + \hat{\beta}R_m&lt;/script&gt;&lt;/p&gt;
@@ -24,11 +26,12 @@
   &lt;li&gt;&lt;script type=&quot;math/tex&quot;&gt;\hat{\beta}&lt;/script&gt; is the beta of asset i to be estimated&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;The beta is calculated will be quite different for different return period and the sampling period chosen. For this example I chose 3 years of monthly return.&lt;/p&gt;
+&lt;p&gt;The beta calculated will be quite different for different return period and the sampling period chosen. For this example I chose 3 years of monthly return.&lt;/p&gt;
 &lt;blockquote&gt;
   &lt;p&gt;Note that, you could choose shorter period for return such as daily return but daily return could be too noisy and the beta might be measuring noise instead of the systematic risk. It really depends on the nature of the asset you are measuring. For fast growing company a shorter period might be preferred sometime.&lt;/p&gt;
 &lt;/blockquote&gt;
 
+&lt;h2 id=&quot;import-data-from-yahoo-finance&quot;&gt;Import Data From Yahoo Finance&lt;/h2&gt;
 &lt;p&gt;For this post, I will reuse the code which I shown in my previous post on &lt;a href=&quot;/blog/python/pandas/2016/09/22/using-python-yahoofinance.html&quot;&gt;how to import finance data from yahoo finance&lt;/a&gt; and &lt;a href=&quot;/blog/pandas/python/2016/09/24/how-apple-perform-against-snp500.html&quot;&gt;how to compute the monthly return&lt;/a&gt; using &lt;code class=&quot;highlighter-rouge&quot;&gt;pct_change&lt;/code&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matplotlib&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inline&lt;/span&gt;
@@ -64,6 +67,7 @@
 
 &lt;p&gt;&lt;img src=&quot;/assets/img/blog/calculate-beta/output_1_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
+&lt;h2 id=&quot;linear-regression&quot;&gt;Linear Regression&lt;/h2&gt;
 &lt;p&gt;Fortunately, it is simple to estimate &lt;script type=&quot;math/tex&quot;&gt;\alpha&lt;/script&gt; and &lt;script type=&quot;math/tex&quot;&gt;\beta&lt;/script&gt; in python using the Linear Regression function in Statsmodel package &lt;code class=&quot;highlighter-rouge&quot;&gt;statsmodels.api.OLS&lt;/code&gt;&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;statsmodels.api&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sm&lt;/span&gt;
@@ -117,6 +121,8 @@ Warnings:
 &lt;p&gt;The result of this simple Linear Regression isn’t very good. The line shown in red seem to be affected by outlier. Even though the Probability of Type I Error for Beta is near to 0, the adjusted &lt;script type=&quot;math/tex&quot;&gt;R^2&lt;/script&gt; result is only 0.477. Which mean only 47.7% of the data’s variation is explained by Beta.&lt;/p&gt;
 
 &lt;p&gt;In practice, most stock has low adjusted &lt;script type=&quot;math/tex&quot;&gt;R^2&lt;/script&gt; around 0.1 to 0.5. This is because the single index CAPM’s Beta is only measuring systematic risk. To accord for more type of risk (e.g. Size, Liquidity, etc), you could use multi-index model. If you are interested, you might want to check out Arbitrage Pricing Theory for more information.&lt;/p&gt;
+
+&lt;h2 id=&quot;code&quot;&gt;Code&lt;/h2&gt;
 
 &lt;p&gt;Here is all the code put together:&lt;/p&gt;
 
@@ -182,6 +188,7 @@ Warnings:
         <description>&lt;p&gt;Are you interested to know how well Apple Inc’s Stock does compare to S&amp;amp;P500? 
 In this tutorial, I will show you how to compare the cummulative monthly return for Apple Inc and S&amp;amp;P500 using Python &lt;!--description--&gt;&lt;/p&gt;
 
+&lt;h2 id=&quot;import-data-from-yahoo-finance&quot;&gt;Import data from Yahoo Finance&lt;/h2&gt;
 &lt;p&gt;The following code will load the required data for Apple Inc and S&amp;amp;P500. If you need explanation for the code, please refer to my previous tutorial on &lt;a href=&quot;/blog/python/pandas/2016/09/22/using-python-yahoofinance.html&quot;&gt;how to use Python to import finance data from Yahoo Finance&lt;/a&gt;.&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas_datareader.data&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;web&lt;/span&gt;
@@ -197,6 +204,7 @@ In this tutorial, I will show you how to compare the cummulative monthly return 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
+&lt;h2 id=&quot;plot-price-chart&quot;&gt;Plot Price Chart&lt;/h2&gt;
 &lt;p&gt;Let’s plot the chart for S&amp;amp;P500 and Apple Inc using matplotlib first.&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;matplotlib&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inline&lt;/span&gt;
@@ -224,7 +232,10 @@ In this tutorial, I will show you how to compare the cummulative monthly return 
 
 &lt;p&gt;&lt;img src=&quot;/assets/img/blog/apple-compare-snp500/output_3_1.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
+&lt;h2 id=&quot;pandas-resample&quot;&gt;Pandas Resample&lt;/h2&gt;
 &lt;p&gt;To get the monthly return, first use pandas &lt;code class=&quot;highlighter-rouge&quot;&gt;resample&lt;/code&gt; to resample the daily price to monthly price using the price from first business day of the month. If you are interested in different frequency of price, you can specify the frequency you are interested in the argument of &lt;code class=&quot;highlighter-rouge&quot;&gt;resample&lt;/code&gt;. Refer to &lt;a href=&quot;http://pandas.pydata.org/pandas-docs/stable/timeseries.html#offset-aliases&quot;&gt;timeseries offset aliases&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;timeseries-offset-aliases&quot;&gt;Timeseries offset aliases&lt;/h2&gt;
 
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;B       business day frequency
 C       custom business day frequency (experimental)
@@ -502,7 +513,7 @@ Fortunately, return could be easily calculated using &lt;code class=&quot;highli
 &lt;/div&gt;
 
 &lt;p&gt;Now, let’s compute the cummulative Return using the following formula:
-&lt;script type=&quot;math/tex&quot;&gt;R_{cummulative}(N) = \prod_{t=1}^{N}(1+R_{mth}(t))&lt;/script&gt;&lt;/p&gt;
+\[ R_{cummulative}(N) = \prod_{t=1}^{N}(1+R_{mth}(t)) \]&lt;/p&gt;
 
 &lt;blockquote&gt;
   &lt;p&gt;Pandas comes with &lt;code class=&quot;highlighter-rouge&quot;&gt;cumprod&lt;/code&gt; to compute the cummulative return for every rows.&lt;/p&gt;
@@ -587,6 +598,8 @@ Fortunately, return could be easily calculated using &lt;code class=&quot;highli
 &lt;/table&gt;
 &lt;/div&gt;
 
+&lt;h2 id=&quot;cummulative-monthly-return&quot;&gt;Cummulative Monthly Return&lt;/h2&gt;
+
 &lt;p&gt;I will plot cummulative monthly return for Apple Inc and S&amp;amp;P500 together in the same plot.&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
@@ -603,6 +616,8 @@ Fortunately, return could be easily calculated using &lt;code class=&quot;highli
 &lt;p&gt;&lt;img src=&quot;/assets/img/blog/apple-compare-snp500/output_15_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;From this plot, we can actually see that over the past 5 years+, Apple Inc stock actually outperform S&amp;amp;P 500. Good luck to you if you have been holding Apple Inc since 2011!&lt;/p&gt;
+
+&lt;h2 id=&quot;code&quot;&gt;Code&lt;/h2&gt;
 
 &lt;p&gt;Here is the code put together…&lt;/p&gt;
 
